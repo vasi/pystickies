@@ -4,13 +4,13 @@ import argparse
 import struct
 from cStringIO import StringIO
 
-from termcolor import colored
-from pyth.plugins.rtf15.reader import Rtf15Reader
 
 def rtfDoc(r):
+	from pyth.plugins.rtf15.reader import Rtf15Reader
 	return Rtf15Reader.read(StringIO(r))
 
 def rtfTextTerm(text, props):
+	from termcolor import colored
 	attrs = None
 	if 'bold' in props:
 		attrs = ['bold']
