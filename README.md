@@ -1,11 +1,12 @@
 #pystickies
 ---
 
-Converts the database from the Mac's "Stickies" program into RTF files, one per sticky. This is platform-independent, it doesn't use Cocoa to do the conversion, but rather uses heuristics to find the RTF data.
+Converts the database from the Mac's "Stickies" program into RTF files, one per sticky. This is platform-independent, it doesn't use Cocoa to do the conversion, but rather uses heuristics to find the RTF data within the Stickies database.
 
 ##Requirements
 
 [pyth](https://github.com/brendonh/pyth)
+
 [termcolor](http://pypi.python.org/pypi/termcolor) (optional, for printing to the terminal)
 
 ##Examples
