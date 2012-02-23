@@ -79,7 +79,7 @@ def parseStickies(dbPath):
 if __name__ == '__main__':
 	parser = argparse.ArgumentParser(description="Read OS X Stickies database")
 	parser.add_argument('stickies', help="stickies database to parse")
-	parser.add_argument('-r, --rtf', dest='rtfOut', help="directory for RTF output")
+	parser.add_argument('-r', '--rtf', dest='rtfOut', help="directory for RTF output")
 	args = parser.parse_args()
 	
 	rtfs = parseStickies(args.stickies)
