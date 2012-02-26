@@ -60,7 +60,8 @@ def writeRtfs(rtfs, outDir):
 	names = []
 	for r in rtfs:
 		# Find a unique name
-		header = rtfHeader(r)
+		header = rtfHeader(r).replace(os.sep, '_')[0:100]
+		print header
 		base = header
 		suf = 0
 		while base in names:
