@@ -5,6 +5,32 @@ import argparse
 import subprocess
 import tempfile
 
+class TextutilConverter(object):
+	def convert(self, src, dst):
+		subprocess.check_call(['textutil', '-convert', 'html', '-output', dst, src])
+
+class UnrtfConverter(object):
+	def convert(self, src, dst):
+		subprocess.check_call(['unrtf', '--html', src],
+			stdout=open(dst, 'w'), stderr=open(os.devnull, 'w'))
+
+# Check if path exists
+def which(program):
+	for d in os.environ['PATH'].split(os.pathsep):
+		f = os.path.join(d, program)
+		if os.access(f, os.X_OK):
+			return f
+	return None
+
+# Return o
+def converter():
+	if which('textutil'):
+		return TextutilConverter()
+	elif which('unrtf'):
+		return UnrtfConverter()
+	else:
+		raise Exception("No converter available")
+
 if __name__ == '__main__':
 	parser = argparse.ArgumentParser(description="Sync OS X Stickies with HTML files")
 	parser.add_argument('stickies', help="stickies database to parse")
@@ -28,6 +54,7 @@ if __name__ == '__main__':
 		os.makedirs(args.outDir)
 	unwanted = set(os.listdir(args.outDir))
 	
+	cvt = converter()
 	for srcName in os.listdir(cacheDir):
 		name, ext = os.path.splitext(srcName)
 		if ext != ".rtf":
@@ -36,8 +63,7 @@ if __name__ == '__main__':
 		
 		src = os.path.join(cacheDir, srcName)
 		dst = os.path.join(args.outDir, dstName)
-		# textutil only exists on OS X!
-		subprocess.check_call(['textutil', '-convert', 'html', '-output', dst, src])
+		cvt.convert(src, dst)
 		unwanted.discard(dstName)
 	for f in unwanted:
 		os.remove(os.path.join(args.outDir, f))
