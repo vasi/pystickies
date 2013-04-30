@@ -3,6 +3,7 @@ import os
 import string
 import subprocess
 import argparse
+import site
 
 templ = string.Template("""<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
@@ -50,7 +51,7 @@ if __name__ == '__main__':
 	progDir = args.progDir or os.path.realpath(os.path.dirname(__file__))
 	domain = args.domain or user
 	name = domain + ".stickiessync"
-	pylib = args.pylib or os.environ['PYTHONPATH']
+	pylib = args.pylib or os.environ.get('PYTHONPATH', site.USER_SITE)
 	
 	s = templ.substitute(user=user, home=home, db=db, progDir=progDir,
 		name=name, pylib=pylib, outDir=os.path.realpath(args.outDir))
